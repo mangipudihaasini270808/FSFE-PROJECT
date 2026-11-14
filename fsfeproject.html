@@ -1,0 +1,1281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Grievance Redressal Portal</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f2f5fa;
+    color: #263238;
+}
+
+header {
+    background: #142d4e;
+    color: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header h2 {
+    font-size: 22px;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav a:hover {
+    color: #80d8ff;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+.hero {
+    background: linear-gradient(120deg, #142d4e, #2875a8);
+    color: white;
+    padding: 65px 25px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.hero h1 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    margin-bottom: 25px;
+}
+
+button, .btn {
+    background: #0879bd;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+button:hover, .btn:hover {
+    background: #075b91;
+}
+
+.secondary {
+    background: #526579;
+}
+
+.danger {
+    background: #c0392b;
+}
+
+.success {
+    background: #218c56;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px #00000012;
+}
+
+.card h3 {
+    margin-bottom: 12px;
+    color: #142d4e;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+h2.section-title {
+    margin-bottom: 20px;
+    color: #142d4e;
+}
+
+.form-box {
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px #00000012;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd4dd;
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #0879bd;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-box button {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 13px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #142d4e;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f5f8fb;
+}
+
+.status {
+    padding: 5px 9px;
+    border-radius: 12px;
+    font-size: 12px;
+    background: #e5eaf0;
+}
+
+.Pending {
+    color: #a66b00;
+    background: #fff0c2;
+}
+
+.Under-Review {
+    color: #075b91;
+    background: #d5edff;
+}
+
+.Resolved {
+    color: #176b3b;
+    background: #d7f5df;
+}
+
+.Rejected {
+    color: #a52a2a;
+    background: #ffe0e0;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.actions button {
+    padding: 7px 10px;
+}
+
+.search-box {
+    margin-top: 20px;
+    max-width: 400px;
+}
+
+.notice {
+    background: #e4f2ff;
+    padding: 15px;
+    border-left: 4px solid #0879bd;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+footer {
+    background: #142d4e;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+}
+
+.small-text {
+    color: #777;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+@media(max-width:600px) {
+    header {
+        flex-direction: column;
+    }
+
+    .hero h1 {
+        font-size: 25px;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .form-box {
+        padding: 20px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>🎓 GRIEVANCE PORTAL</h2>
+
+    <nav>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('login')">Login</a>
+        <a onclick="showPage('register')">Register</a>
+        <a onclick="showPage('submit')">Submit Grievance</a>
+        <a onclick="showPage('track')">Track Status</a>
+        <a onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+<!-- HOME PAGE -->
+
+<section id="home" class="section active">
+
+    <div class="hero">
+        <h1>Student Grievance Redressal Portal</h1>
+
+        <p>
+            Your Voice Matters! Submit your concerns,
+            track complaints and get solutions.
+        </p>
+
+        <button onclick="showPage('submit')">
+            Submit a Grievance
+        </button>
+
+        <button class="secondary"
+        onclick="showPage('track')">
+            Track Grievance
+        </button>
+    </div>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>📝 Submit Complaints</h3>
+            <p>
+                Register your academic or campus-related
+                complaints through an easy online form.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Track Complaints</h3>
+            <p>
+                Check the current status of your
+                submitted grievances using your ID.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>⚡ Quick Resolution</h3>
+            <p>
+                Follow the progress of your complaints
+                until they are resolved.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔒 Secure Access</h3>
+            <p>
+                Separate student and administrator
+                interfaces for managing complaints.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="notice">
+        <b>Important:</b> Please provide accurate information
+        while submitting your grievance.
+    </div>
+
+</section>
+
+
+<!-- REGISTER PAGE -->
+
+<section id="register" class="section">
+
+    <h2 class="section-title">Student Registration</h2>
+
+    <div class="form-box">
+
+        <form id="registerForm">
+
+            <label>Full Name</label>
+            <input type="text" id="regName" required>
+
+            <label>Student ID</label>
+            <input type="text" id="regId" required>
+
+            <label>Email Address</label>
+            <input type="email" id="regEmail" required>
+
+            <label>Department</label>
+            <select id="regDept" required>
+                <option value="">Select Department</option>
+                <option>CSE</option>
+                <option>ECE</option>
+                <option>EEE</option>
+                <option>IT</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Other</option>
+            </select>
+
+            <label>Password</label>
+            <input type="password" id="regPassword"
+            minlength="6" required>
+
+            <button type="submit">Create Account</button>
+
+        </form>
+
+        <p class="small-text">
+            Already registered?
+            <a href="#" onclick="showPage('login')">Login here</a>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- LOGIN PAGE -->
+
+<section id="login" class="section">
+
+    <h2 class="section-title">Login to Your Account</h2>
+
+    <div class="form-box">
+
+        <form id="loginForm">
+
+            <label>Email Address</label>
+            <input type="email" id="loginEmail" required>
+
+            <label>Password</label>
+            <input type="password" id="loginPassword" required>
+
+            <label>Login As</label>
+            <select id="loginRole">
+                <option value="student">Student</option>
+                <option value="admin">Administrator</option>
+            </select>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <div class="notice">
+            Demo Admin Credentials:<br>
+            Email: admin@college.com<br>
+            Password: admin123
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STUDENT DASHBOARD -->
+
+<section id="dashboard" class="section">
+
+    <h2 class="section-title">Student Dashboard</h2>
+
+    <div class="card">
+        <h3 id="welcomeUser">Welcome, Student!</h3>
+        <p>Manage your grievances from this dashboard.</p>
+    </div>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>Total Complaints</h3>
+            <h2 id="studentTotal">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Pending</h3>
+            <h2 id="studentPending">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Under Review</h3>
+            <h2 id="studentReview">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Resolved</h3>
+            <h2 id="studentResolved">0</h2>
+        </div>
+
+    </div>
+
+    <br>
+
+    <button onclick="showPage('submit')">
+        + Submit New Grievance
+    </button>
+
+    <button class="secondary"
+    onclick="showPage('myGrievances')">
+        View My Complaints
+    </button>
+
+</section>
+
+
+<!-- SUBMIT GRIEVANCE PAGE -->
+
+<section id="submit" class="section">
+
+    <h2 class="section-title">Submit a Grievance</h2>
+
+    <div class="form-box">
+
+        <form id="grievanceForm">
+
+            <label>Student Name</label>
+            <input type="text" id="studentName" required>
+
+            <label>Student ID</label>
+            <input type="text" id="studentID" required>
+
+            <label>Email Address</label>
+            <input type="email" id="studentEmail" required>
+
+            <label>Department</label>
+            <select id="department" required>
+                <option value="">Select Department</option>
+                <option>CSE</option>
+                <option>ECE</option>
+                <option>EEE</option>
+                <option>IT</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Other</option>
+            </select>
+
+            <label>Grievance Category</label>
+            <select id="category" required>
+                <option value="">Select Category</option>
+                <option>Academic Issues</option>
+                <option>Faculty Related Issues</option>
+                <option>Examination Issues</option>
+                <option>Hostel Issues</option>
+                <option>Transportation Issues</option>
+                <option>Infrastructure Issues</option>
+                <option>Library Issues</option>
+                <option>Fee Related Issues</option>
+                <option>Other</option>
+            </select>
+
+            <label>Grievance Subject</label>
+            <input type="text" id="subject"
+            placeholder="Enter complaint subject" required>
+
+            <label>Priority</label>
+            <select id="priority" required>
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+                <option>Urgent</option>
+            </select>
+
+            <label>Describe Your Grievance</label>
+            <textarea id="description" rows="5"
+            placeholder="Explain your problem..." required></textarea>
+
+            <label>Attach Supporting Document (Optional)</label>
+            <input type="file" id="attachment"
+            accept=".pdf,.jpg,.jpeg,.png">
+
+            <button type="submit">Submit Grievance</button>
+
+            <button type="reset" class="secondary">
+                Clear Form
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- TRACK GRIEVANCE PAGE -->
+
+<section id="track" class="section">
+
+    <h2 class="section-title">Track Your Grievance</h2>
+
+    <div class="form-box">
+
+        <label>Enter Grievance ID</label>
+
+        <input type="text" id="trackID"
+        placeholder="Example: GRV1001">
+
+        <br><br>
+
+        <button onclick="trackGrievance()">
+            Check Status
+        </button>
+
+        <div id="trackResult"></div>
+
+    </div>
+
+</section>
+
+
+<!-- MY GRIEVANCES PAGE -->
+
+<section id="myGrievances" class="section">
+
+    <h2 class="section-title">My Complaints</h2>
+
+    <div id="myGrievanceList"></div>
+
+</section>
+
+
+<!-- ADMIN DASHBOARD -->
+
+<section id="admin" class="section">
+
+    <h2 class="section-title">Administrator Dashboard</h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>Total Complaints</h3>
+            <h2 id="adminTotal">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Pending</h3>
+            <h2 id="adminPending">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Under Review</h3>
+            <h2 id="adminReview">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Resolved</h3>
+            <h2 id="adminResolved">0</h2>
+        </div>
+
+    </div>
+
+    <br>
+
+    <h2>Manage Grievances</h2>
+
+    <input class="search-box" type="text"
+    id="adminSearch"
+    placeholder="Search by ID, student or category..."
+    oninput="renderAdmin()">
+
+    <select id="adminFilter" onchange="renderAdmin()"
+    style="max-width:250px; margin-top:15px;">
+        <option value="">All Statuses</option>
+        <option>Pending</option>
+        <option>Under Review</option>
+        <option>Resolved</option>
+        <option>Rejected</option>
+    </select>
+
+    <div id="adminList"></div>
+
+</section>
+
+
+<!-- FEEDBACK PAGE -->
+
+<section id="feedback" class="section">
+
+    <h2 class="section-title">Feedback</h2>
+
+    <div class="form-box">
+
+        <form id="feedbackForm">
+
+            <label>Your Name</label>
+            <input type="text" id="feedbackName" required>
+
+            <label>Grievance ID</label>
+            <input type="text" id="feedbackID" required>
+
+            <label>Rate Your Experience</label>
+            <select id="rating" required>
+                <option value="">Select Rating</option>
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Average</option>
+                <option>Poor</option>
+            </select>
+
+            <label>Comments</label>
+            <textarea id="feedbackMessage" rows="4"></textarea>
+
+            <button type="submit">Submit Feedback</button>
+
+        </form>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<footer>
+    <h3>Student Grievance Redressal Portal</h3>
+    <p>Student Grievance Redressal Cell</p>
+    <p>For a Better Campus Experience</p>
+    <p>&copy; 2026 All Rights Reserved</p>
+</footer>
+
+
+<script>
+
+// DATA STORAGE
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let grievances = JSON.parse(localStorage.getItem("grievances")) || [];
+let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+
+let currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;
+
+function saveData() {
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("grievances", JSON.stringify(grievances));
+    localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
+}
+
+
+// PAGE NAVIGATION
+
+function showPage(page) {
+
+    const protectedPages = [
+        "dashboard", "submit", "myGrievances", "feedback"
+    ];
+
+    if (protectedPages.includes(page) && !currentUser) {
+        alert("Please login first!");
+        page = "login";
+    }
+
+    if (page === "admin" &&
+        (!currentUser || currentUser.role !== "admin")) {
+        alert("Administrator login required!");
+        page = "login";
+    }
+
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(page).classList.add("active");
+
+    if (page === "dashboard") {
+        updateStudentDashboard();
+        fillStudentDetails();
+    }
+
+    if (page === "myGrievances") {
+        renderMyGrievances();
+    }
+
+    if (page === "admin") {
+        renderAdmin();
+    }
+}
+
+
+// STUDENT REGISTRATION
+
+document.getElementById("registerForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const email = document.getElementById("regEmail").value.trim();
+
+    if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        alert("Email already registered!");
+        return;
+    }
+
+    const user = {
+        name: document.getElementById("regName").value,
+        studentId: document.getElementById("regId").value,
+        email: email,
+        department: document.getElementById("regDept").value,
+        password: document.getElementById("regPassword").value,
+        role: "student"
+    };
+
+    users.push(user);
+    saveData();
+
+    alert("Registration successful! Please login.");
+
+    this.reset();
+    showPage("login");
+
+});
+
+
+// LOGIN
+
+document.getElementById("loginForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const role = document.getElementById("loginRole").value;
+
+    if (role === "admin") {
+
+        if (email === "admin@college.com" &&
+            password === "admin123") {
+
+            currentUser = {
+                name: "Administrator",
+                email: email,
+                role: "admin"
+            };
+
+        } else {
+            alert("Invalid administrator credentials!");
+            return;
+        }
+
+    } else {
+
+        const user = users.find(u =>
+            u.email.toLowerCase() === email.toLowerCase() &&
+            u.password === password &&
+            u.role === "student"
+        );
+
+        if (!user) {
+            alert("Invalid student email or password!");
+            return;
+        }
+
+        currentUser = user;
+    }
+
+    sessionStorage.setItem(
+        "currentUser",
+        JSON.stringify(currentUser)
+    );
+
+    alert("Login successful!");
+
+    this.reset();
+
+    if (currentUser.role === "admin") {
+        showPage("admin");
+    } else {
+        showPage("dashboard");
+    }
+
+});
+
+
+// FILL STUDENT DETAILS
+
+function fillStudentDetails() {
+
+    if (!currentUser || currentUser.role !== "student") return;
+
+    document.getElementById("welcomeUser").innerText =
+        "Welcome, " + currentUser.name + "!";
+
+    document.getElementById("studentName").value =
+        currentUser.name;
+
+    document.getElementById("studentID").value =
+        currentUser.studentId;
+
+    document.getElementById("studentEmail").value =
+        currentUser.email;
+
+    document.getElementById("department").value =
+        currentUser.department;
+}
+
+
+// GRIEVANCE SUBMISSION
+
+document.getElementById("grievanceForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    if (!currentUser || currentUser.role !== "student") {
+        alert("Student login required!");
+        return;
+    }
+
+    const file = document.getElementById("attachment").files[0];
+
+    if (file && file.size > 2 * 1024 * 1024) {
+        alert("Attachment must be smaller than 2 MB.");
+        return;
+    }
+
+    const grievance = {
+
+        id: "GRV" + Date.now(),
+
+        name: document.getElementById("studentName").value,
+        studentID: document.getElementById("studentID").value,
+        email: document.getElementById("studentEmail").value,
+        department: document.getElementById("department").value,
+
+        category: document.getElementById("category").value,
+
+        subject: document.getElementById("subject").value,
+
+        priority: document.getElementById("priority").value,
+
+        description: document.getElementById("description").value,
+
+        attachment: file ? file.name : "None",
+
+        status: "Pending",
+
+        date: new Date().toLocaleString(),
+
+        feedback: ""
+
+    };
+
+    grievances.push(grievance);
+
+    saveData();
+
+    alert(
+        "Grievance submitted successfully!\nYour Grievance ID is: "
+        + grievance.id
+    );
+
+    this.reset();
+    fillStudentDetails();
+    showPage("dashboard");
+
+});
+
+
+// STUDENT DASHBOARD
+
+function updateStudentDashboard() {
+
+    if (!currentUser) return;
+
+    const list = grievances.filter(g =>
+        g.email.toLowerCase() === currentUser.email.toLowerCase()
+    );
+
+    document.getElementById("studentTotal").innerText = list.length;
+
+    document.getElementById("studentPending").innerText =
+        list.filter(g => g.status === "Pending").length;
+
+    document.getElementById("studentReview").innerText =
+        list.filter(g => g.status === "Under Review").length;
+
+    document.getElementById("studentResolved").innerText =
+        list.filter(g => g.status === "Resolved").length;
+}
+
+
+// TRACK GRIEVANCE
+
+function trackGrievance() {
+
+    const id = document.getElementById("trackID").value.trim();
+
+    const result = document.getElementById("trackResult");
+
+    const grievance = grievances.find(g =>
+        g.id.toLowerCase() === id.toLowerCase()
+    );
+
+    if (!grievance) {
+        result.innerHTML =
+            "<div class='notice'>No grievance found with this ID.</div>";
+        return;
+    }
+
+    if (currentUser &&
+        currentUser.role === "student" &&
+        grievance.email.toLowerCase() !== currentUser.email.toLowerCase()) {
+
+        result.innerHTML =
+            "<div class='notice'>You can only track your own grievances.</div>";
+        return;
+    }
+
+    result.innerHTML = `
+        <div class="card" style="margin-top:20px">
+            <h3>Grievance Details</h3>
+            <p><b>ID:</b> ${escapeHTML(grievance.id)}</p>
+            <p><b>Category:</b> ${escapeHTML(grievance.category)}</p>
+            <p><b>Subject:</b> ${escapeHTML(grievance.subject)}</p>
+            <p><b>Priority:</b> ${escapeHTML(grievance.priority)}</p>
+            <p><b>Date:</b> ${escapeHTML(grievance.date)}</p>
+            <p><b>Status:</b>
+            <span class="status ${grievance.status.replaceAll(" ","-")}">
+            ${escapeHTML(grievance.status)}
+            </span></p>
+        </div>
+    `;
+}
+
+
+// MY GRIEVANCES
+
+function renderMyGrievances() {
+
+    const list = grievances.filter(g =>
+        g.email.toLowerCase() === currentUser.email.toLowerCase()
+    );
+
+    const output = document.getElementById("myGrievanceList");
+
+    if (list.length === 0) {
+        output.innerHTML = "<p>No complaints submitted yet.</p>";
+        return;
+    }
+
+    output.innerHTML = `
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+
+            ${list.map(g => `
+                <tr>
+                    <td>${escapeHTML(g.id)}</td>
+                    <td>${escapeHTML(g.subject)}</td>
+                    <td>${escapeHTML(g.category)}</td>
+                    <td>${escapeHTML(g.date)}</td>
+                    <td>
+                    <span class="status ${g.status.replaceAll(" ","-")}">
+                    ${escapeHTML(g.status)}
+                    </span>
+                    </td>
+                </tr>
+            `).join("")}
+
+        </table>
+    `;
+}
+
+
+// ADMIN DASHBOARD
+
+function renderAdmin() {
+
+    if (!currentUser || currentUser.role !== "admin") return;
+
+    document.getElementById("adminTotal").innerText =
+        grievances.length;
+
+    document.getElementById("adminPending").innerText =
+        grievances.filter(g => g.status === "Pending").length;
+
+    document.getElementById("adminReview").innerText =
+        grievances.filter(g => g.status === "Under Review").length;
+
+    document.getElementById("adminResolved").innerText =
+        grievances.filter(g => g.status === "Resolved").length;
+
+    const search = document.getElementById("adminSearch").value.toLowerCase();
+
+    const filter = document.getElementById("adminFilter").value;
+
+    const list = grievances.filter(g => {
+
+        const matchesSearch =
+            g.id.toLowerCase().includes(search) ||
+            g.name.toLowerCase().includes(search) ||
+            g.category.toLowerCase().includes(search) ||
+            g.subject.toLowerCase().includes(search);
+
+        const matchesFilter =
+            filter === "" || g.status === filter;
+
+        return matchesSearch && matchesFilter;
+
+    });
+
+    const output = document.getElementById("adminList");
+
+    if (list.length === 0) {
+        output.innerHTML = "<p>No matching grievances found.</p>";
+        return;
+    }
+
+    output.innerHTML = `
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            ${list.map(g => `
+                <tr>
+                    <td>${escapeHTML(g.id)}</td>
+                    <td>${escapeHTML(g.name)}</td>
+                    <td>${escapeHTML(g.category)}</td>
+                    <td>${escapeHTML(g.priority)}</td>
+                    <td>
+                    <span class="status ${g.status.replaceAll(" ","-")}">
+                    ${escapeHTML(g.status)}
+                    </span>
+                    </td>
+
+                    <td>
+                        <select onchange="updateStatus('${g.id}',this.value)">
+                            ${["Pending","Under Review","Resolved","Rejected"]
+                            .map(s => `
+                                <option value="${s}"
+                                ${g.status === s ? "selected" : ""}>
+                                ${s}
+                                </option>
+                            `).join("")}
+                        </select>
+                    </td>
+                </tr>
+            `).join("")}
+
+        </table>
+    `;
+}
+
+
+// UPDATE GRIEVANCE STATUS
+
+function updateStatus(id, newStatus) {
+
+    const grievance = grievances.find(g => g.id === id);
+
+    if (!grievance) return;
+
+    grievance.status = newStatus;
+
+    saveData();
+
+    renderAdmin();
+
+    alert("Grievance status updated successfully!");
+
+}
+
+
+// FEEDBACK
+
+document.getElementById("feedbackForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const id = document.getElementById("feedbackID").value.trim();
+
+    const grievance = grievances.find(g =>
+        g.id.toLowerCase() === id.toLowerCase()
+    );
+
+    if (!grievance) {
+        alert("Invalid Grievance ID!");
+        return;
+    }
+
+    if (grievance.email.toLowerCase() !== currentUser.email.toLowerCase()) {
+        alert("You can only provide feedback for your own grievance.");
+        return;
+    }
+
+    if (grievance.status !== "Resolved") {
+        alert("Feedback can be submitted after resolution.");
+        return;
+    }
+
+    if (grievance.feedback) {
+        alert("Feedback has already been submitted for this grievance.");
+        return;
+    }
+
+    const feedback = {
+
+        name: document.getElementById("feedbackName").value,
+
+        grievanceID: id,
+
+        rating: document.getElementById("rating").value,
+
+        message: document.getElementById("feedbackMessage").value
+
+    };
+
+    feedbacks.push(feedback);
+
+    grievance.feedback = "Submitted";
+
+    saveData();
+
+    alert("Thank you for your feedback!");
+
+    this.reset();
+
+});
+
+
+// SAFE HTML DISPLAY
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+
+// LOGOUT
+
+function logout() {
+
+    if (!currentUser) {
+        alert("You are not logged in.");
+        showPage("home");
+        return;
+    }
+
+    currentUser = null;
+
+    sessionStorage.removeItem("currentUser");
+
+    alert("Logged out successfully!");
+
+    showPage("home");
+
+}
+
+
+// RESTORE SESSION
+
+if (currentUser) {
+
+    if (currentUser.role === "admin") {
+        showPage("admin");
+    } else {
+        showPage("dashboard");
+    }
+
+}
+
+</script>
+
+</body>
+</html>
